@@ -4,11 +4,17 @@ using System.Runtime.Serialization;
 
 namespace ValueObjectSerialization
 {
-    public static class New<T>
+    public sealed class SerializationFactory<T> : IFactory<T>
     {
-        public static readonly Func<T> Instance = CreateInstance();
+        // Monostate pattern. Cuts down on the Reflection performance cost.
+        private static readonly Func<T> _create = CreateFactory();
 
-        private static Func<T> CreateInstance()
+        public T Create()
+        {
+            return _create();
+        }
+
+        private static Func<T> CreateFactory()
         {
             var t = typeof(T);
             if (t == typeof(string))

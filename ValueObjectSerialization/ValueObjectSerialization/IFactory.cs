@@ -1,5 +1,4 @@
-﻿
-namespace ValueObjectSerialization
+﻿namespace ValueObjectSerialization
 {
     public interface IFactory<out T>
     {

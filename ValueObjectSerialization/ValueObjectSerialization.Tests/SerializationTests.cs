@@ -1,5 +1,5 @@
-﻿using CSharpDtoSerialization.Tests.TestObjects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ValueObjectSerialization.Tests.TestObjects;
 
 namespace ValueObjectSerialization.Tests
 {
@@ -7,24 +7,24 @@ namespace ValueObjectSerialization.Tests
     public class SerializationTests
     {
         [TestMethod]
-        public void Deserialization_SimpleDto_DeserializedCorrectly()
+        public void Deserialization_SimpleValueObject_MatchesOriginal()
         {
-            var src = new SimpleDto("Donkey Kong", 1981);
+            var src = new SimpleValueObject("Donkey Kong", 1981);
             var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<SimpleDto>(serializable).Create();
+            var dest = new ReflectionDeserialized<SimpleValueObject>(serializable).Create();
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Year, dest.Year);
         }
 
         [TestMethod]
-        public void Deserialization_ComplexDto_MatchesOriginal()
+        public void Deserialization_ComplexValueObject_MatchesOriginal()
         {
-            var src = new ComplexDto("I Am Complex", new SimpleDto("I Am Simple", 1234));
+            var src = new ComplexValueObject("I Am Complex", new SimpleValueObject("I Am Simple", 1234));
             var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<ComplexDto>(serializable).Create();
+            var dest = new ReflectionDeserialized<ComplexValueObject>(serializable).Create();
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Inner.Name, dest.Inner.Name);
@@ -32,25 +32,25 @@ namespace ValueObjectSerialization.Tests
         }
 
         [TestMethod]
-        public void Deserialization_InheritedDto_MatchesOriginal()
+        public void Deserialization_InheritedValueObject_MatchesOriginal()
         {
-            var src = new InheritedDto("Cloud Strife", 1997, "Grey");
+            var src = new InheritedValueObject("Cloud Strife", 1997, "Sword");
             var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<InheritedDto>(serializable).Create();
+            var dest = new ReflectionDeserialized<InheritedValueObject>(serializable).Create();
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Year, dest.Year);
-            Assert.AreEqual(src.Color, dest.Color);
+            Assert.AreEqual(src.Weapon, dest.Weapon);
         }
 
         [TestMethod]
         public void Deserialization_ToSimplerType_IsCorrect()
         {
-            var src = new InheritedDto("Cloud Strife", 1997, "Grey");
+            var src = new InheritedValueObject("William Blazkowicz", 2001, "MP40");
             var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<SimpleDto>(serializable).Create();
+            var dest = new ReflectionDeserialized<SimpleValueObject>(serializable).Create();
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Year, dest.Year);

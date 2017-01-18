@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace ValueObjectSerialization
@@ -19,31 +17,24 @@ namespace ValueObjectSerialization
 
         public T Create()
         {
-            var props = _info.ObjectType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-
-            var overlapping = new List<SerializationEntry>();
+            var obj = new SerializationFactory<T>().Create();
             foreach (var entry in _info)
-                if (props.Any(x => entry.Name.Equals(x.Name)))
-                    overlapping.Add(entry);
-
-            var obj = New<T>.Instance();
-            overlapping.ForEach(x => SetDeclaringObjectPropertyValue(obj, x.Name, x.Value));
+                SetDeclaringObjectPropertyValueIfExists(obj, entry.Name, entry.Value);
             return obj;
         }
 
-        private static void SetDeclaringObjectPropertyValue(object obj, string propertyName, object value)
+        private void SetDeclaringObjectPropertyValueIfExists(object obj, string propertyName, object value)
         {
-            var inner = obj.GetType();
-            while (inner != null)
+            var currentType = obj.GetType();
+            while (currentType != null)
             {
-                var propToSet = inner.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-                if (propToSet != null && propToSet.CanWrite)
+                var prop = currentType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+                if (prop != null && prop.CanWrite)
                 {
-                    propToSet.SetValue(obj, value, null);
+                    prop.SetValue(obj, value);
                     return;
                 }
-
-                inner = inner.BaseType;
+                currentType = currentType.BaseType;
             }
         }
     }

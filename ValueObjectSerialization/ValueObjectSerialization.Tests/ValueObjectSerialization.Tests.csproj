@@ -52,9 +52,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializationTests.cs" />
-    <Compile Include="TestObjects\ComplexDto.cs" />
-    <Compile Include="TestObjects\InheritedDto.cs" />
-    <Compile Include="TestObjects\SimpleDto.cs" />
+    <Compile Include="TestObjects\ComplexValueObject.cs" />
+    <Compile Include="TestObjects\InheritedValueObject.cs" />
+    <Compile Include="TestObjects\SimpleValueObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ValueObjectSerialization\ValueObjectSerialization.csproj">
