@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IFactory.cs" />
+    <Compile Include="NewtonsoftDeserialized.cs" />
+    <Compile Include="NewtonsoftSerializedBytes.cs" />
     <Compile Include="PublicReadableProperties.cs" />
     <Compile Include="SerializationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

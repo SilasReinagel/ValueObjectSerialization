@@ -45,7 +45,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -55,6 +57,7 @@
     <Compile Include="TestObjects\ComplexValueObject.cs" />
     <Compile Include="TestObjects\InheritedValueObject.cs" />
     <Compile Include="TestObjects\SimpleValueObject.cs" />
+    <Compile Include="NewtonsoftTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ValueObjectSerialization\ValueObjectSerialization.csproj">
