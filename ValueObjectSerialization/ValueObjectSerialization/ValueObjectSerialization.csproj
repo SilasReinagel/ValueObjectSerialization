@@ -43,13 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultConverter.cs" />
+    <Compile Include="Deserialized.cs" />
+    <Compile Include="IConverter.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="NewtonsoftDeserialized.cs" />
-    <Compile Include="NewtonsoftSerializedBytes.cs" />
+    <Compile Include="NewtonsoftJsonString.cs" />
     <Compile Include="PublicReadableProperties.cs" />
+    <Compile Include="PublicPropertyWriter.cs" />
     <Compile Include="SerializationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReflectionDeserialized.cs" />
     <Compile Include="ReflectionSerializable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,9 +10,8 @@ namespace ValueObjectSerialization.Tests
         public void Deserialization_SimpleValueObject_MatchesOriginal()
         {
             var src = new SimpleValueObject("Donkey Kong", 1981);
-            var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<SimpleValueObject>(serializable).Create();
+            var dest = GetDeserialized(src);
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Year, dest.Year);
@@ -22,9 +21,8 @@ namespace ValueObjectSerialization.Tests
         public void Deserialization_ComplexValueObject_MatchesOriginal()
         {
             var src = new ComplexValueObject("I Am Complex", new SimpleValueObject("I Am Simple", 1234));
-            var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<ComplexValueObject>(serializable).Create();
+            var dest = GetDeserialized(src);
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Inner.Name, dest.Inner.Name);
@@ -35,9 +33,8 @@ namespace ValueObjectSerialization.Tests
         public void Deserialization_InheritedValueObject_MatchesOriginal()
         {
             var src = new InheritedValueObject("Cloud Strife", 1997, "Sword");
-            var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<InheritedValueObject>(serializable).Create();
+            var dest = GetDeserialized(src);
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Year, dest.Year);
@@ -48,12 +45,18 @@ namespace ValueObjectSerialization.Tests
         public void Deserialization_ToSimplerType_IsCorrect()
         {
             var src = new InheritedValueObject("William Blazkowicz", 2001, "MP40");
-            var serializable = new ReflectionSerializable(src);
 
-            var dest = new ReflectionDeserialized<SimpleValueObject>(serializable).Create();
+            var dest = GetDeserialized<SimpleValueObject>(src); 
 
             Assert.AreEqual(src.Name, dest.Name);
             Assert.AreEqual(src.Year, dest.Year);
+        }
+
+
+        private T GetDeserialized<T>(T src)
+        {
+            var serializable = new ReflectionSerializable(src).SerializationInfo;
+            return new Deserialized<T>(serializable).Create();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace ValueObjectSerialization.Tests
 
         private T GetDeserialized<T>(T src)
         {
-            var bytes = new NewtonsoftSerializedBytes(src).Create();
+            var bytes = new NewtonsoftJsonString(src).Create();
             return new NewtonsoftDeserialized<T>(bytes).Create();
         }
     }
